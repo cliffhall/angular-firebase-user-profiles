@@ -32,6 +32,7 @@
         instance.create = create;
         instance.extract = extract;
         instance.update = update;
+        instance.remove = remove;
         instance.fromPassword = fromPassword;
         instance.fromFacebook = fromFacebook;
         instance.fromGoogle = fromGoogle;
@@ -80,6 +81,13 @@
 
             // NOTIFY
             BroadcastService.send(EVENTS.PROFILE_UPDATED, profile);
+        }
+
+        // Remove the user profile in the database
+        function remove() {
+            // REMOVE FROM DB
+            var uid = $rootScope.account.authData.uid;
+            $rootScope.db.users.child(uid).remove();
         }
 
         // Extract the initial user profile from the provider authData

@@ -17,7 +17,8 @@
         .constant('EVENTS', {
             PROFILE_LOADED: 'profile-loaded',
             PROFILE_UPDATED: 'profile-updated',
-            PROFILE_CHANGED: 'profile-changed'
+            PROFILE_CHANGED: 'profile-changed',
+            PROFILE_REMOVED: 'profile-removed'
         })
         .constant('AUTH_PROVIDERS',{
             PASSWORD: 'password',
@@ -58,8 +59,7 @@
                         PAGES,
                         USER_FORMS,
                         AUTH_PROVIDERS,
-                        DB_NODES)
-    {
+                        DB_NODES) {
 
         // Database-related scope initialization
         var db = {};
@@ -77,9 +77,10 @@
         var account = {};
         account.profile = null;
         account.editing = false;
+        account.confirmDelete = false;
         account.authData = db.base.getAuth();
         account.USER_FORMS = USER_FORMS;
-        account.PROVIDERS = AUTH_PROVIDERS;
+        account.AUTH_PROVIDERS = AUTH_PROVIDERS;
         account.emailInput = null;
         account.passwordInput = null;
         account.passwordConfirmInput = null;

@@ -14,6 +14,7 @@
                 '$rootScope',
                 '$timeout',
                 'ProfileService',
+                'AUTH_PROVIDERS',
                 'USER_FORMS',
                 'EVENTS',
                 UserController
@@ -24,9 +25,10 @@
     function UserController($rootScope,
                             $timeout,
                             ProfileService,
+                            AUTH_PROVIDERS,
                             USER_FORMS,
-                            EVENTS)
-    {
+                            EVENTS) {
+
         // Construct and initialize the instance
         var instance = this;
         instance.createUser = createUser;
@@ -43,7 +45,10 @@
         instance.showAccountScreen = showAccountScreen;
         instance.changePassword = changePassword;
         instance.sendResetEmail = sendResetEmail;
+        instance.confirmDelete = confirmDelete;
+        instance.cancelDelete = cancelDelete;
         instance.deleteUser = deleteUser;
+        instance.finishDeleteUser = finishDeleteUser;
         instance.authStateChanged = authStateChanged;
         instance.setMessage = setMessage;
         instance.clearMessage = clearMessage;
@@ -96,10 +101,10 @@
             }, function(error, authData) {
                 if (error) {
                     instance.setMessage(error.message, true);
-                    $rootScope.account.selectedUserForm = USER_FORMS.ACCOUNT;
+                    instance.selectForm(USER_FORMS.SIGN_IN);
                 } else {
                     instance.resetPasswordInputs();
-                    $rootScope.account.selectedUserForm = USER_FORMS.PROFILE;
+                    instance.selectForm(USER_FORMS.PROFILE);
                 }
                 $rootScope.$digest();
             });
@@ -128,7 +133,7 @@
                     }
                 } else {
                     $rootScope.account.authData = authData;
-                    $rootScope.account.selectedUserForm = USER_FORMS.PROFILE;
+                    instance.selectForm(USER_FORMS.PROFILE);
                 }
                 $rootScope.$digest();
             });
@@ -181,7 +186,7 @@
 
         // Show the account screen
         function showAccountScreen() {
-            $rootScope.account.selectedUserForm = USER_FORMS.PROFILE;
+            instance.selectForm(USER_FORMS.PROFILE);
             if ($rootScope.account.profile.newUser) {
                 $rootScope.account.editing = true;
                 instance.setMessage("Complete your profile to unlock your first achievement!", false);
@@ -221,20 +226,51 @@
             });
         }
 
+        // Confirm that the user wishes to remove the account
+        function confirmDelete(){
+            instance.resetPasswordInputs();
+            $rootScope.account.confirmDelete = true;
+        }
+
+        // Cancel the account deletion
+        function cancelDelete(){
+            instance.clearMessage();
+            instance.selectForm(USER_FORMS.PROFILE);
+            $rootScope.account.confirmDelete = false;
+        }
+
         // Delete the user's account
         function deleteUser(email, password) {
-            $rootScope.db.base.removeUser({
-                email    : email,
-                password : password
-            }, function(error) {
-                if (error) {
-                    instance.setMessage("Error removing user:", true);
-                } else {
-                    instance.setMessage("User removed successfully", false);
-                    instance.resetPasswordInputs();
-                    $rootScope.account.selectedUserForm = USER_FORMS.SIGN_IN;
-                }
-            });
+            ProfileService.remove();
+            var provider = $rootScope.account.authData.provider;
+            if (provider === AUTH_PROVIDERS.PASSWORD) {
+                $rootScope.db.base.removeUser({
+                    email    : email,
+                    password : password
+                }, function(error) {
+                    if (error) {
+                        instance.setMessage(error.message, true);
+                        $timeout($rootScope.digest,1000,true);
+                    } else {
+                        instance.finishDeleteUser();
+                    }
+                });
+            } else {
+                instance.finishDeleteUser();
+            }
+        }
+
+        // Complete the account removal
+        function finishDeleteUser(){
+            instance.signUserOut();
+            instance.resetFormFlags();
+            instance.setMessage("Account removed. Sorry to see you go.", false);
+            instance.selectForm(USER_FORMS.SIGN_IN);
+            instance.resetPasswordInputs();
+            $rootScope.account.emailInput = "";
+            $rootScope.account.authData = null;
+            $rootScope.account.profile = null;
+            $timeout($rootScope.digest,2000,true);
         }
 
         // Callback invoked when the authentication state changes
@@ -246,7 +282,7 @@
             } else {
                 $rootScope.account.profile = null;
                 instance.resetFormFlags();
-                $rootScope.account.selectedUserForm = USER_FORMS.SIGN_IN;
+                instance.selectForm(USER_FORMS.SIGN_IN);
             }
         }
 
@@ -286,13 +322,14 @@
         // Reset the form editing flags
         function resetFormFlags(){
             $rootScope.account.editing = false;
+            $rootScope.account.confirmDelete = false;
             $rootScope.account.formSubmitted = false;
         }
 
         // Reset the password inputs
         function resetPasswordInputs() {
             $rootScope.account.passwordInput = "";
-            $rootScope.account.newPasswordInput = null;
+            $rootScope.account.newPasswordInput = "";
             $rootScope.account.passwordConfirmInput = "";
         }
     }
