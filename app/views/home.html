@@ -1,12 +1,18 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Home Page Template
+-->
 <div class="jumbotron" ng-controller="NavController as navCtrl">
     <span class="h1">User Profiles!</span>
     <p/>
     <p class="lead">Basic profile management with Angular and Firebase.</p>
     <hr/>
-    <p><a class="btn btn-lg btn-success"
+    <a class="btn btn-lg btn-success"
           ng-hide="account.profile"
           ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
-          ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a></p>
+          ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
 </div>
 
 <!-- INFO PANELS SIDE-BY-SIDE -->
