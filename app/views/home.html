@@ -8,11 +8,15 @@
     <span class="h1">User Profiles!</span>
     <p/>
     <p class="lead">Basic profile management with Angular and Firebase.</p>
-    <hr/>
-    <a class="btn btn-lg btn-success"
-          ng-hide="account.profile"
-          ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
-          ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
+    <div ng-hide="account.profile">
+        <a class="btn btn-lg btn-success"
+              ng-hide="account.profile"
+              ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
+              ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
+    </div>
+    <div ng-show="account.profile">
+        <p class="lead">See how easy it is, {{account.profile.name.first || account.profile.name.display}}?</p>
+    </div>
 </div>
 
 <!-- INFO PANELS SIDE-BY-SIDE -->
