@@ -1,0 +1,54 @@
+<!-- SOCIAL SIGN-UP BUTTONS -->
+<div class="panel panel-primary">
+
+    <!-- HEADER -->
+    <div class="panel-heading">
+
+        <!-- ICON -->
+            <span class="glyphicon glyphicon glyphicon-cloud"
+                  aria-hidden="true"
+                  style="padding-right: 20px"></span>
+
+        <!-- HEADING -->
+        <span class="h4">Social Sign-in</span>
+
+    </div>
+
+    <!-- PANEL BODY -->
+    <div class="panel-body social-signin-buttons">
+
+        <div class="social-signin-buttons">
+
+            <!-- FACEBOOK -->
+            <a class="btn btn-social-icon btn-facebook"
+               ng-click="userCtrl.signInWithOAuth(account.PROVIDERS.FACEBOOK)">
+                <span class="fa fa-facebook"></span>
+            </a>
+
+            <!-- TWITTER -->
+            <a class="btn btn-social-icon btn-twitter"
+               ng-click="userCtrl.signInWithOAuth(account.PROVIDERS.TWITTER)">
+                <span class="fa fa-twitter"></span>
+            </a>
+
+            <!-- GOOGLE -->
+            <a class="btn btn-social-icon btn-google"
+               ng-click="userCtrl.signInWithOAuth(account.PROVIDERS.GOOGLE)">
+                <span class="fa fa-google"></span>
+            </a>
+
+            <!-- GITHUB -->
+            <a class="btn btn-social-icon btn-github"
+               ng-click="userCtrl.signInWithOAuth(account.PROVIDERS.GITHUB)">
+                <span class="fa fa-github"></span>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- OR DIVIDER -->
+<div class="or-div div-padded-bottom"> OR </div>
+

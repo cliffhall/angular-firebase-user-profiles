@@ -1,0 +1,137 @@
+
+/* Pad the bottom of a div */
+.div-padded-bottom {
+    margin-bottom: 10px;
+}
+
+/* Make columns inside rows be of equal height */
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+/* Make panel headings not wrap but show ellipsis */
+.panel-heading h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 8px;
+}
+
+/* Prevent navbar from turning into stacked version on mobile */
+.navbar-collapse.collapse {
+    display: block !important;
+    margin-bottom: 0px;
+    padding-left:0px;
+    padding-right: 0px;
+}
+
+.navbar-nav>li, .navbar-nav {
+    float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: 0px !important;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+/* Sign in/up forms */
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.form-signin .input-group-btn button{
+    height: 44px;
+    margin-bottom: 9px;
+}
+
+.form-signin .input-group-btn .btn-textarea{
+    height: 88px;
+    margin-bottom: 9px;
+}
+
+.form-signin .panel{
+    margin-top: 10px;
+}
+
+.social-signin-buttons {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 72%;
+    margin: auto;
+}
+
+/* Circular profile image */
+div.profile-div{
+    height:75px;
+    width:75px;
+    overflow:hidden;
+    border-radius:50%;
+}
+
+.profile-div img{
+    -webkit-transform:translate(-50%);
+    margin-left:37px;
+}
+
+/* "--- OR ----" divider on sign-in/sign-up pages */
+.or-div {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    color:grey;
+}
+
+.or-div:after,
+.or-div:before {
+    content: "";
+    display: block;
+    background: grey;
+    width: 30%;
+    height:1px;
+    margin: 0 10px;
+}
+
+/* Pointer over list group item */
+.list-group a{
+    cursor: pointer;
+}

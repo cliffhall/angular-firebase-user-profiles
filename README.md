@@ -4,11 +4,16 @@ Basic user profile management built on Angular 1.x and Firebase.
 
 Supports both password and social sign-in via Google+, Twitter, Facebook, and GitHub.
 
+## Demo
+* [ng-user-profiles hosted by Firebase](https://ng-user-profiles.firebaseapp.com)
+
 ## Platforms / Technologies
 * JavaScript
 * [Angular](https://github.com/angular/angular.js)
-* [Bootstrap](https://github.com/twbs/bootstrap)
 * [JQuery](https://github.com/jquery/jquery)
+* [Bootstrap](https://github.com/twbs/bootstrap)
+* [Bootstrap Social](https://github.com/lipis/bootstrap-social)
+
 
 ## License
 __angular-firebase-user-profiles__

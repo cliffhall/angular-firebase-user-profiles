@@ -1,0 +1,28 @@
+<!-- ACHIEVEMENTS PANEL -->
+<div class="panel panel-success" ng-show="account.profile && !account.profile.newUser">
+
+    <!-- HEADER -->
+    <div class="panel-heading">
+
+        <!-- ICON -->
+        <span class="glyphicon glyphicon glyphicon-king"
+              aria-hidden="true"
+              style="padding-right: 20px"></span>
+
+        <!-- HEADING -->
+        <span class="h4">Achievements</span>
+
+    </div>
+
+    <!-- PANEL BODY -->
+    <div class="panel-body text-justify">
+
+        <!-- ACHIEVEMENTS -->
+        <div class="list-group">
+            <div ng-repeat="achievement in account.profile.achievements"
+                 class="list-group-item">{{achievement}}</div>
+        </div>
+
+    </div>
+
+</div>

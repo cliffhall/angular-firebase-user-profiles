@@ -1,0 +1,29 @@
+<!-- USER SIGNED-OUT MENU -->
+<div ng-hide="userCtrl.isSignedIn(account.authData)">
+
+    <ul class="nav nav-tabs">
+
+        <!-- MEMBERS -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_IN)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.SIGN_IN)">
+            <a>Members</a>
+        </li>
+
+        <!-- SIGN UP -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_UP)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.SIGN_UP)">
+            <a>Sign Up</a>
+        </li>
+
+        <!-- FORGOT PASSWORD -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.FORGOT_PASS)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.FORGOT_PASS)">
+            <a>Forgot Password</a>
+        </li>
+
+    </ul>
+
+</div>

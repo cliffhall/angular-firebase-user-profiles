@@ -1,0 +1,22 @@
+<!-- ACCOUNT SCREEN INFO PANEL -->
+<div class="alert alert-danger alert-dismissible fade in"
+     ng-show="account.errorState"
+     role="alert">
+
+    <!-- CLOSE BUTTON -->
+    <button type=button class=close data-dismiss=alert aria-label=Close>
+        <span aria-hidden=true>&times;</span>
+    </button>
+
+    <!-- ICON -->
+        <span class="glyphicon glyphicon glyphicon-exclamation-sign"
+              aria-hidden="true"
+              style="padding-right: 20px"></span>
+
+    <!-- HEADING -->
+    <span class="h4">Woops...</span>
+
+    <!-- TEXT -->
+    <p>{{account.message}}</p>
+
+</div>

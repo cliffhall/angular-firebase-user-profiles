@@ -1,0 +1,115 @@
+<!-- PROFILE FORM TEMPLATE-->
+<div ng-show="account.editing && userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.PROFILE)">
+
+    <!-- PROFILE -->
+    <form name="profileEdit" class="form-signin" ng-submit="userCtrl.saveProfile()">
+
+        <!-- PROFILE IMAGE -->
+        <div ng-include="'app/views/account/profile-image.html'"></div>
+
+        <!-- INFO PANEL -->
+        <div ng-include="'app/views/account/info-panel.html'"></div>
+
+        <!-- ERROR PANEL -->
+        <div ng-include="'app/views/account/error-panel.html'"></div>
+
+        <!-- VALIDATION PANEL -->
+        <div ng-include="'app/views/account/validate-panel.html'"></div>
+
+        <!-- FORM -->
+        <div class="well">
+
+            <!-- DISPLAY NAME -->
+            <label for="displayNameInput" class="sr-only">Display Name</label>
+            <input ng-model="account.profile.name.display"
+                   ng-change="userCtrl.clearMessage()"
+                   type="text"
+                   id="displayNameInput"
+                   name="displayNameInput"
+                   class="form-control"
+                   placeholder="Display Name"
+                   ng-required="true"
+                   autofocus>
+            <div class="row">
+
+                <!-- FIRST NAME -->
+                <div class="col-lg-6">
+                    <label for="firstNameInput" class="sr-only">First Name</label>
+                    <input ng-model="account.profile.name.first"
+                           ng-change="userCtrl.clearMessage()"
+                           type="text"
+                           id="firstNameInput"
+                           name="firstNameInput"
+                           class="form-control"
+                           placeholder="First Name"
+                           ng-required="true">
+                </div>
+
+                <!-- LAST NAME -->
+                <div class="col-lg-6">
+                    <label for="lastNameInput" class="sr-only">Last Name</label>
+                    <input ng-model="account.profile.name.last"
+                           ng-change="userCtrl.clearMessage()"
+                           type="text"
+                           id="lastNameInput"
+                           name="lastNameInput"
+                           class="form-control"
+                           placeholder="Last Name"
+                           ng-required="true">
+                </div>
+
+            </div>
+
+            <!-- EMAIL ADDRESS -->
+            <label for="emailInput" class="sr-only">Email Address</label>
+            <input ng-model="account.profile.email"
+                   ng-change="userCtrl.clearMessage()"
+                   ng-disabled="account.authData.provider === account.PROVIDERS.PASSWORD"
+                   type="email"
+                   id="emailInput"
+                   name="emailInput"
+                   class="form-control"
+                   placeholder="Email Address"
+                   ng-required="true">
+            <p/>
+
+            <!-- BIO -->
+            <div class="div-padded-bottom">
+                <textarea class="form-control"
+                          rows="3"
+                          placeholder="Bio"
+                          ng-change="userCtrl.clearMessage()"
+                          ng-model="account.profile.bio">
+                </textarea>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="row" ng-show="account.profile && !account.profile.newUser">
+
+            <!-- SAVE BUTTON -->
+            <div class="col-xs-6">
+                <button class="btn btn-lg btn-success btn-block"
+                        type="submit"
+                        ng-click="account.formSubmitted=true;"
+                        value="submit">Save</button>
+            </div>
+
+            <!-- CANCEL BUTTON -->
+            <div class="col-xs-6">
+                <button class="btn btn-lg btn-info btn-block"
+                        type="button"
+                        ng-click="userCtrl.retrieveProfile()">Cancel</button>
+            </div>
+
+        </div>
+
+        <!-- SAVE BUTTON (NEW USER)-->
+        <button class="btn btn-lg btn-primary btn-block"
+                ng-hide="account.profile && !account.profile.newUser"
+                ng-click="account.formSubmitted=true;"
+                type="submit" value="submit">Save</button>
+    </form>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="jumbotron">
+
+    <span class="h1">{{(account.authData != null)?"Account":"Sign In"}}</span>
+
+</div>
+
+<div ng-controller="UserController as userCtrl">
+
+    <div ng-controller="NavController as navCtrl">
+
+        <!-- SIGNED-IN MENU -->
+        <div ng-include="'app/views/account/signed-in-menu.html'"></div>
+
+        <!-- SIGNED-OUT MENU-->
+        <div ng-include="'app/views/account/signed-out-menu.html'"></div>
+
+        <!-- USER FORMS  -->
+        <div id="signInContainer">
+
+            <!-- SIGN-IN FORM -->
+            <div ng-include="'app/views/account/sign-in.html'"></div>
+
+            <!-- SIGN-UP FORM -->
+            <div ng-include="'app/views/account/sign-up.html'"></div>
+
+            <!-- FORGOT PASSWORD FORM -->
+            <div ng-include="'app/views/account/forgot-password.html'"></div>
+
+            <!-- PROFILE FORM -->
+            <div ng-include="'app/views/account/profile-edit.html'"></div>
+
+            <!-- PROFILE DISPLAY -->
+            <div ng-include="'app/views/account/profile-display.html'"></div>
+
+            <!-- CHANGE PASSWORD FORM -->
+            <div ng-include="'app/views/account/change-password.html'"></div>
+
+            <!-- DELETE USER FORM -->
+            <div ng-include="'app/views/account/delete-user.html'"></div>
+
+            <!-- SIGN OUT FORM -->
+            <div ng-include="'app/views/account/sign-out.html'"></div>
+
+        </div>
+
+    </div>
+
+</div>

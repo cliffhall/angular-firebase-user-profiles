@@ -1,0 +1,42 @@
+<!-- CHANGE PASSWORD FORM TEMPLATE-->
+<div ng-show="userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_OUT)">
+
+    <form class="form-signin">
+
+        <!-- PROFILE IMAGE -->
+        <div ng-include="'app/views/account/profile-image.html'"></div>
+
+        <!-- CONFIRMATION PANEL -->
+        <div class="panel panel-primary">
+
+            <!-- HEADER -->
+            <div class="panel-heading">
+
+                <!-- ICON -->
+                <span class="fa fa-sign-out"
+                      aria-hidden="true"
+                      style="padding-right: 20px"></span>
+
+                <!-- HEADING -->
+                <span class="h4">Are you sure?</span>
+
+            </div>
+
+            <!-- PANEL BODY -->
+            <div class="panel-body social-signin-buttons">
+
+                <!-- SIGN OUT BUTTON -->
+                <button class="btn btn-lg btn-primary btn-block"
+                        ng-click="userCtrl.signUserOut()">Sign Out</button>
+
+                <!-- CANCEL BUTTON -->
+                <button class="btn btn-lg btn-info btn-block"
+                        ng-click="userCtrl.selectForm(account.USER_FORMS.PROFILE)">Cancel</button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

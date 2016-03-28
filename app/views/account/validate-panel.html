@@ -1,0 +1,48 @@
+<!-- VALIDATION PANEL -->
+<div class="panel panel-danger"
+     ng-show="account.formSubmitted && profileEdit.$invalid && profileEdit.$dirty">
+
+    <!-- HEADER -->
+    <div class="panel-heading">
+
+        <!-- ICON -->
+            <span class="glyphicon glyphicon glyphicon-exclamation-sign"
+                  aria-hidden="true"
+                  style="padding-right: 20px"></span>
+
+        <!-- HEADING -->
+        <span class="h4">Validation Problems</span>
+
+    </div>
+
+    <!-- PANEL BODY -->
+    <div class="panel-body text-justify">
+
+        <!-- DISPLAY NAME REQUIRED -->
+        <div ng-messages="profileEdit.displayNameInput.$error">
+            <p ng-message="required">Display Name is required.</p>
+        </div>
+
+        <!-- FIRST NAME REQUIRED -->
+        <div ng-messages="profileEdit.firstNameInput.$error">
+            <p ng-message="required">First Name is required.</p>
+        </div>
+
+        <!-- LAST NAME REQUIRED -->
+        <div ng-messages="profileEdit.lastNameInput.$error">
+            <p ng-message="required">Last Name is required.</p>
+        </div>
+
+        <!-- EMAIL ADDRESS REQUIRED -->
+        <div ng-messages="profileEdit.emailInput.$error">
+            <p ng-message="required">Email Address is required.</p>
+        </div>
+
+        <!-- EMAIL ADDRESS REQUIRED -->
+        <div ng-messages="profileEdit.emailInput.$error">
+            <p ng-message="email">Email Address is not valid.</p>
+        </div>
+
+    </div>
+
+</div>

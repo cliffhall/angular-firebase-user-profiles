@@ -1,0 +1,46 @@
+<!-- EXISTING USER FORM TEMPLATE-->
+<div ng-show="userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_IN)">
+
+    <!-- MEMBER SIGN-IN -->
+    <form name="signin" class="form-signin" ng-submit="userCtrl.signUserIn()">
+
+        <!-- SOCIAL SIGN-IN FORM -->
+        <div ng-include="'app/views/account/sign-in-social.html'"></div>
+
+        <!-- ERROR PANEL -->
+        <div ng-include="'app/views/account/error-panel.html'"></div>
+
+        <!-- FORM -->
+        <div class="well">
+
+            <!-- EMAIL ADDRESS -->
+            <label for="emailInput" class="sr-only">Email address</label>
+            <input ng-model="account.emailInput"
+                   ng-change="userCtrl.clearMessage()"
+                   type="text"
+                   id="emailInput"
+                   name="emailInput"
+                   class="form-control"
+                   placeholder="Email address"
+                   ng-required="true"
+                   autofocus>
+
+            <!-- PASSWORD -->
+            <label for="passwordInput" class="sr-only">Password</label>
+            <input ng-model="account.passwordInput"
+                   ng-change="userCtrl.clearMessage()"
+                   type="password"
+                   id="passwordInput"
+                   name="passwordInput"
+                   class="form-control"
+                   placeholder="Password"
+                   ng-required="true">
+
+        </div>
+        <!-- SIGN IN BUTTON -->
+        <button class="btn btn-lg btn-primary btn-block"
+                type="submit" id="submit" value="submit">Sign in</button>
+
+    </form>
+
+</div>

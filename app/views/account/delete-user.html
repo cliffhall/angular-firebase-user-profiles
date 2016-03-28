@@ -1,0 +1,40 @@
+<!-- DELETE USER FORM TEMPLATE-->
+<div ng-show="userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.DELETE_USER)">
+
+    <!-- DELETE USER -->
+    <form class="form-signin">
+
+        <!-- CONFIRMATION PANEL-->
+        <div class="panel panel-primary">
+
+            <!-- HEADER -->
+            <div class="panel-heading">
+
+                <!-- ICON -->
+                <span class="fa fa-sign-out"
+                      aria-hidden="true"
+                      style="padding-right: 20px"></span>
+
+                <!-- HEADING -->
+                <span class="h4">Are you sure?</span>
+
+            </div>
+
+            <!-- PANEL BODY -->
+            <div class="panel-body social-signin-buttons">
+
+                <!-- DELETE ACCOUNT BUTTON -->
+                <button class="btn btn-lg btn-danger btn-block"
+                        ng-click="userCtrl.deleteUser()">Delete Account</button>
+
+                <!-- CANCEL BUTTON -->
+                <button class="btn btn-lg btn-warning btn-block"
+                        ng-click="userCtrl.selectForm(account.USER_FORMS.ACCOUNT_INFO)">Cancel</button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
