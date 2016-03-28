@@ -1,0 +1,42 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Signed In Menu Template
+-->
+<div ng-show="userCtrl.isSignedIn(account.authData)">
+
+    <ul class="nav nav-tabs">
+
+        <!-- PROFILE -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.PROFILE)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.PROFILE)">
+            <a>Profile</a>
+        </li>
+
+        <!-- CHANGE PASSWORD -->
+        <li role="button"
+            ng-show="account.profile.provider === account.PROVIDERS.PASSWORD"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.CHANGE_PASS)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.CHANGE_PASS)">
+            <a>Change Password</a>
+        </li>
+
+        <!-- DELETE ACCOUNT -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.DELETE_USER)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.DELETE_USER)">
+            <a>Delete Account</a>
+        </li>
+
+        <!-- SIGN OUT -->
+        <li role="button"
+            ng-class="{active: userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_OUT)}"
+            ng-click="userCtrl.selectForm(account.USER_FORMS.SIGN_OUT)">
+            <a>Sign Out</a>
+        </li>
+
+    </ul>
+
+</div>

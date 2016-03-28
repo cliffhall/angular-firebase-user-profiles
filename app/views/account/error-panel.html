@@ -1,0 +1,30 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Error Panel Template
+-->
+<div class="alert alert-danger alert-dismissible fade in"
+     ng-show="account.errorState"
+     role="alert">
+
+    <!-- CLOSE BUTTON -->
+    <button type="button"
+            class="close"
+            aria-label="Close"
+            ng-click="userCtrl.clearMessage()">
+        <span aria-hidden=true>&times;</span>
+    </button>
+
+    <!-- ICON -->
+        <span class="glyphicon glyphicon glyphicon-exclamation-sign"
+              aria-hidden="true"
+              style="padding-right: 20px"></span>
+
+    <!-- HEADING -->
+    <span class="h4">Woops...</span>
+
+    <!-- TEXT -->
+    <p>{{account.message}}</p>
+
+</div>

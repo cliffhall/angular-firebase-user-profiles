@@ -1,0 +1,30 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Info Panel Template
+-->
+<div class="alert alert-info alert-dismissible fade in"
+     ng-show="account.message && !account.errorState"
+     role="alert">
+
+        <!-- CLOSE BUTTON -->
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                ng-click="userCtrl.clearMessage()">
+            <span aria-hidden=true>&times;</span>
+        </button>
+
+        <!-- ICON -->
+        <span class="glyphicon glyphicon glyphicon-info-sign pull-left"
+              aria-hidden="true"
+              style="padding-right: 20px"></span>
+
+        <!-- HEADING -->
+        <span class="h4">Info</span>
+
+        <!-- TEXT -->
+        <p>{{account.message}}</p>
+
+</div>

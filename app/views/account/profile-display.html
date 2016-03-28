@@ -1,0 +1,66 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Profile Display Template
+-->
+<div ng-show="!account.editing && userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.PROFILE)">
+
+    <!-- PROFILE -->
+    <form class="form-signin">
+
+        <!-- PROFILE IMAGE -->
+        <div ng-include="'app/views/account/profile-image.html'"></div>
+
+        <!-- ACHIEVEMENTS PANEL -->
+        <div ng-include="'app/views/account/achievements-panel.html'"></div>
+
+        <!-- DISPLAY -->
+        <div class="list-group">
+
+            <!-- LOGGED IN WITH  -->
+            <div class="list-group-item" ng-show="account.profile.provider != account.PROVIDERS.PASSWORD">
+                <h4 class="list-group-item-heading">Signed in With</h4>
+                <p class="list-group-item-text">{{account.profile.provider.toUpperCase()}}</p>
+            </div>
+
+            <!-- DISPLAY NAME -->
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Display Name</h4>
+                <p class="list-group-item-text">{{account.profile.name.display}}</p>
+            </div>
+
+            <!-- FIRST NAME -->
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">First Name</h4>
+                <p class="list-group-item-text">{{account.profile.name.first}}</p>
+            </div>
+
+            <!-- LAST NAME -->
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Last Name</h4>
+                <p class="list-group-item-text">{{account.profile.name.last}}</p>
+            </div>
+
+            <!-- LAST NAME -->
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Email Address</h4>
+                <p class="list-group-item-text">{{account.profile.email}}</p>
+            </div>
+
+            <!-- BIO -->
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Bio</h4>
+                <p class="list-group-item-text">{{account.profile.bio}}</p>
+            </div>
+
+            <!-- EDIT BUTTON -->
+            <div class="list-group-item">
+                <button class="btn btn-lg btn-primary btn-block"
+                        ng-click="account.editing = true;">Edit</button>
+            </div>
+
+        </div>
+   </form>
+
+</div>

@@ -1,0 +1,76 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Delete User Form Template
+-->
+<div ng-show="userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.DELETE_USER)">
+
+    <!-- DELETE USER -->
+    <form class="form-signin">
+
+        <!-- PROFILE IMAGE -->
+        <div ng-include="'app/views/account/profile-image.html'"></div>
+
+        <!-- ERROR PANEL -->
+        <div ng-include="'app/views/account/error-panel.html'"></div>
+
+        <!-- INFO PANEL -->
+        <div ng-include="'app/views/account/info-panel.html'"></div>
+
+        <!-- CONFIRMATION PANEL-->
+        <div class="panel panel-primary">
+
+            <!-- HEADER -->
+            <div class="panel-heading">
+
+                <!-- ICON -->
+                <span class="glyphicon glyphicon glyphicon-trash"
+                      aria-hidden="true"
+                      style="padding-right: 20px"></span>
+
+                <!-- HEADING -->
+                <span class="h4">Remove User Profile</span>
+
+            </div>
+
+            <!-- PANEL BODY -->
+            <div class="panel-body social-signin-buttons">
+
+                <div ng-show="account.authData.provider === account.AUTH_PROVIDERS.PASSWORD && account.confirmDelete">
+
+                    <!-- CURRENT PASSWORD -->
+                    <label for="passwordInput" class="sr-only">Current Password</label>
+                    <input ng-model="account.passwordInput"
+                           ng-change="userCtrl.clearMessage()"
+                           type="password"
+                           id="passwordInput"
+                           name="passwordInput"
+                           class="form-control"
+                           placeholder="Current Password">
+                    </div>
+
+
+            <!-- CONFIRM BUTTON -->
+            <button ng-click="userCtrl.deleteUser(account.profile.email, account.passwordInput)"
+                    ng-show="account.confirmDelete"
+                    class="btn btn-lg btn-warning btn-block"
+                    aria-label="Confirm Delete">Confirm Delete</button>
+
+            <!-- DELETE ACCOUNT BUTTON -->
+            <button class="btn btn-lg btn-danger btn-block"
+                    ng-hide="account.confirmDelete"
+                    ng-click="userCtrl.confirmDelete()">Delete Account</button>
+
+            <!-- CANCEL BUTTON -->
+            <button class="btn btn-lg btn-info btn-block"
+                    ng-click="userCtrl.cancelDelete()">Cancel</button>
+
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

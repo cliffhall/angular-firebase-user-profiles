@@ -1,0 +1,66 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Account Page, Sign Up Form Template
+-->
+<div ng-show="userCtrl.showForm(account.selectedUserForm, account.USER_FORMS.SIGN_UP)">
+
+    <!-- MEMBER SIGN UP -->
+    <form name="signup" class="form-signin" ng-submit="userCtrl.createUser()">
+
+        <!-- ERROR PANEL -->
+        <div ng-include="'app/views/account/error-panel.html'"></div>
+
+        <!-- INFO PANEL -->
+        <div ng-include="'app/views/account/info-panel.html'"></div>
+
+        <!-- SOCIAL SIGN-IN FORM -->
+        <div ng-include="'app/views/account/sign-in-social.html'"></div>
+
+        <!-- FORM -->
+        <div class="well">
+
+            <!-- EMAIL ADDRESS -->
+            <label for="emailInput" class="sr-only">Email address</label>
+            <input ng-model="account.emailInput"
+                   ng-change="userCtrl.clearMessage()"
+                   type="text"
+                   id="emailInput"
+                   name="emailInput"
+                   class="form-control form-signin-input"
+                   placeholder="Email Address"
+                   ng-required="true"
+                   autofocus>
+
+            <!-- PASSWORD -->
+            <label for="passwordInput" class="sr-only">Password</label>
+            <input ng-model="account.passwordInput"
+                   ng-change="userCtrl.clearMessage()"
+                   type="password"
+                   id="passwordInput"
+                   name="passwordInput"
+                   class="form-control form-signin-input"
+                   placeholder="Desired Password"
+                   ng-required="true">
+
+            <!-- CONFIRM PASSWORD -->
+            <label for="passwordConfirmInput" class="sr-only">Password</label>
+            <input ng-model="account.passwordConfirmInput"
+                   ng-change="userCtrl.clearMessage()"
+                   type="password"
+                   id="passwordConfirmInput"
+                   name="passwordConfirmInput"
+                   class="form-control form-signin-input"
+                   placeholder="Confirm Password"
+                   ng-required="true">
+        </div>
+
+        <!-- CREATE ACCOUNT BUTTON -->
+        <button class="btn btn-lg btn-primary btn-block"
+                ng-disabled="account.passwordConfirmInput != account.passwordInput || account.passwordInput === ''"
+                type="submit">Create Account</button>
+
+    </form>
+
+</div>

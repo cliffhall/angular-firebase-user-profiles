@@ -1,0 +1,50 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Home Page Template
+-->
+<div class="jumbotron" ng-controller="NavController as navCtrl">
+    <span class="h1">User Profiles!</span>
+    <p/>
+    <p class="lead">Basic profile management with Angular and Firebase.</p>
+    <div ng-hide="account.profile">
+        <a class="btn btn-lg btn-success"
+              ng-hide="account.profile"
+              ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
+              ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
+    </div>
+    <div ng-show="account.profile">
+        <p class="lead">See how easy it is, {{account.profile.name.first || account.profile.name.display}}?</p>
+    </div>
+</div>
+
+<!-- INFO PANELS SIDE-BY-SIDE -->
+<div class="row marketing hidden-xs">
+    <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+    <!-- LEFT PANEL -->
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"
+         ng-include="'app/views/home/left-panel.html'"></div>
+
+    <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+    <!-- RIGHT PANEL -->
+    <div  class="col-xs-10 col-sm-10 col-md-10 col-lg-10"
+          ng-include="'app/views/home/right-panel.html'"></div>
+
+    <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+</div>
+
+<!-- INFO PANELS STACKED ON MOBILE -->
+<div class="marketing visible-xs">
+
+    <!-- LEFT PANEL -->
+    <div ng-include="'app/views/home/left-panel.html'"></div>
+
+    <!-- RIGHT PANEL -->
+    <div ng-include="'app/views/home/right-panel.html'"></div>
+
+
+</div>

@@ -1,0 +1,31 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Navgation Template
+-->
+<nav ng-controller="NavController as navCtrl">
+    <div class="navbar-header">
+        <div class="row center-block">
+            <a role="button"
+               ng-href="#{{nav.PAGES.HOME}}"
+               ng-click="navCtrl.selectPage(nav.PAGES.HOME)">
+                <!-- ICON -->
+                <img style="height:50px"
+                     alt="User Profiles" src="assets/img/user-profile.png">
+            </a>
+        </div>
+   </div>
+    <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+        <li role="button"
+            ng-class="{active: navCtrl.isSelected(nav.PAGES.HOME)}"
+            ng-click="navCtrl.selectPage(nav.PAGES.HOME)">
+            <a ng-href="#{{nav.PAGES.HOME}}">Home</a>
+        </li>
+        <li role="button"
+            ng-class="{active: navCtrl.isSelected(nav.PAGES.ACCOUNT)}"
+            ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">
+            <a ng-href="#{{nav.PAGES.ACCOUNT}}">{{(account.authData != null)?"Account":"Sign In"}}</a>
+        </li>
+    </ul>
+</nav>
