@@ -19,7 +19,7 @@
         <div class="list-group">
 
             <!-- LOGGED IN WITH  -->
-            <div class="list-group-item" ng-show="account.profile.provider != account.PROVIDERS.PASSWORD">
+            <div class="list-group-item" ng-show="account.profile.provider != account.AUTH_PROVIDERS.PASSWORD">
                 <h4 class="list-group-item-heading">Signed in With</h4>
                 <p class="list-group-item-text">{{account.profile.provider.toUpperCase()}}</p>
             </div>
