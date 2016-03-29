@@ -69,7 +69,7 @@
             <label for="emailInput" class="sr-only">Email Address</label>
             <input ng-model="account.profile.email"
                    ng-change="userCtrl.clearMessage()"
-                   ng-disabled="account.authData.provider === account.PROVIDERS.PASSWORD"
+                   ng-disabled="account.authData.provider === account.AUTH_PROVIDERS.PASSWORD"
                    type="email"
                    id="emailInput"
                    name="emailInput"
