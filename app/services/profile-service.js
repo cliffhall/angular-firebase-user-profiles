@@ -95,14 +95,18 @@
 
             var name = {first:"", last:"", display:""};
             var profile = {
+                // The private bits
                 uid: authData.uid,
                 provider: authData.provider,
                 newUser: true,
                 email: "",
-                name: name,
-                bio: "",
-                image: "",
-                achievements:[]
+                // Publicly readable info
+                expose: {
+                    name: name,
+                    bio: "",
+                    image: "",
+                    achievements: []
+                }
             };
 
             switch (authData.provider) {
@@ -131,52 +135,52 @@
         // Extract from Password provider
         function fromPassword(authData, profile){
             profile.email = authData.password.email;
-            profile.image = authData.password.profileImageURL || null;
+            profile.expose.image = authData.password.profileImageURL || null;
             return profile;
         }
 
         // Extract from Facebook provider
         function fromFacebook(authData, profile){
-            profile.name.first = authData.facebook.cachedUserProfile.first_name || "";
-            profile.name.last = authData.facebook.cachedUserProfile.last_name || "";
-            profile.name.display = authData.facebook.displayName || "";
-            profile.image = authData.facebook.profileImageURL || null;
+            profile.expose.name.first = authData.facebook.cachedUserProfile.first_name || "";
+            profile.expose.name.last = authData.facebook.cachedUserProfile.last_name || "";
+            profile.expose.name.display = authData.facebook.displayName || "";
+            profile.expose.image = authData.facebook.profileImageURL || null;
             return profile;
         }
 
         // Extract from Google provider
         function fromGoogle(authData, profile){
-            profile.name.first = authData.google.cachedUserProfile.given_name || "";
-            profile.name.last = authData.google.cachedUserProfile.family_name || "";
-            profile.name.display = authData.google.displayName || "";
-            profile.image = authData.google.profileImageURL || null;
+            profile.expose.name.first = authData.google.cachedUserProfile.given_name || "";
+            profile.expose.name.last = authData.google.cachedUserProfile.family_name || "";
+            profile.expose.name.display = authData.google.displayName || "";
+            profile.expose.image = authData.google.profileImageURL || null;
             return profile;
         }
 
         // Extract from Twitter provider
         function fromTwitter(authData, profile){
             var fullName = authData.twitter.displayName;
-            profile.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
-            profile.name.last = fullName.split(' ').slice(-1).join(' ') || "";
-            profile.name.display = authData.twitter.displayName || "";
-            profile.image = authData.twitter.profileImageURL || null;
+            profile.expose.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
+            profile.expose.name.last = fullName.split(' ').slice(-1).join(' ') || "";
+            profile.expose.name.display = authData.twitter.displayName || "";
+            profile.expose.image = authData.twitter.profileImageURL || null;
             return profile;
         }
 
         // Extract from Github provider
         function fromGithub(authData, profile){
             var fullName = authData.github.displayName;
-            profile.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
-            profile.name.last = fullName.split(' ').slice(-1).join(' ') || "";
-            profile.name.display = authData.github.displayName || "";
-            profile.image = authData.github.profileImageURL || null;
+            profile.expose.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
+            profile.expose.name.last = fullName.split(' ').slice(-1).join(' ') || "";
+            profile.expose.name.display = authData.github.displayName || "";
+            profile.expose.image = authData.github.profileImageURL || null;
             return profile;
         }
 
         // Add an achievement to the user's profile
         function addAchievement( profile, achievement ) {
-            if (!profile.achievements) profile.achievements = [];
-            profile.achievements.push( achievement );
+            if (!profile.expose.achievements) profile.expose.achievements = [];
+            profile.expose.achievements.push( achievement );
         }
     }
 })(); // IIFE keeps global scope clean
