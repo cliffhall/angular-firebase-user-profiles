@@ -5,35 +5,44 @@
 * Home Page Template
 -->
 <div class="jumbotron" ng-controller="NavController as navCtrl">
+
+    <!-- HEADING -->
     <span class="h1">User Profiles!</span>
-    <p/>
     <p class="lead">Basic profile management with Angular and Firebase.</p>
 
     <!-- BUTTONS SIDE-BY-SIDE -->
-    <div class="row">
+    <div class="row hidden-xs">
         <div class="col-sm-1 col-md-1 col-lg-1"></div>
 
-        <!-- LEFT BUTTON -->
+        <!-- TRY ME BUTTON -->
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <div ng-hide="account.profile">
-                <a class="btn btn-lg btn-success"
-                   ng-hide="account.profile"
-                   ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
-                   ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
-            </div>
-            <div ng-show="account.profile">
-                <p class="lead">See how easy it is, {{account.profile.expose.name.first || account.profile.expose.name.display}}?</p>
-            </div>
+            <div ng-include="'app/views/home/try-me-button.html'"></div>
         </div>
 
+        <!-- FORK ME BUTTON -->
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <a class="btn btn-lg btn-primary"
-               target="_blank"
-               href="https://github.com/cliffhall/angular-firebase-user-profiles"
-               role="button">Fork on GitHub</a>
+            <div ng-include="'app/views/home/fork-me-button.html'"></div>
         </div>
+
         <div class="col-sm-1 col-md-1 col-lg-1"></div>
     </div>
+
+    <!-- BUTTONS STACKED -->
+    <div class="row visible-xs">
+        <div class="col-xs-3"></div>
+
+        <div class="col-xs-6">
+            <!-- TRY ME BUTTON -->
+            <div class="div-padded-bottom"
+                 ng-include="'app/views/home/try-me-button.html'"></div>
+
+            <!-- FORK ME BUTTON -->
+            <div ng-include="'app/views/home/fork-me-button.html'"></div>
+        </div>
+
+        <div class="col-xs-3"></div>
+    </div>
+
 </div>
 
 <!-- INFO PANELS SIDE-BY-SIDE -->
