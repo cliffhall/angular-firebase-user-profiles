@@ -1,0 +1,15 @@
+<!--
+* angular-firebase-user-profiles
+* (c) 2016 Cliff Hall @ Futurescale, Inc
+*
+* Home Page, Try Me Button Template
+-->
+<div ng-hide="account.profile">
+    <a class="btn btn-lg btn-success btn-block"
+       ng-hide="account.profile"
+       ng-href="#{{nav.PAGES.ACCOUNT}}" role="button"
+       ng-click="navCtrl.selectPage(nav.PAGES.ACCOUNT)">Try it now!</a>
+</div>
+<div ng-show="account.profile">
+    <p class="lead well">See how easy it is, {{account.profile.expose.name.first || account.profile.expose.name.display}}?</p>
+</div>

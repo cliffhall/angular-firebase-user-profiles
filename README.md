@@ -6,6 +6,7 @@ Supports both password and social sign-in via Google+, Twitter, Facebook, and Gi
 
 ## Demo
 * [Live User Profiles demo hosted by Firebase](https://ng-user-profiles.firebaseapp.com)
+* [Attendant blog post](http://cliffordhall.com/2016/03/user-profiles-angular-firebase/)
 
 ## Platforms / Technologies
 * JavaScript
