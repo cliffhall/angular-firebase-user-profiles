@@ -12,12 +12,13 @@
             'NavController',
             [
                 '$rootScope',
+                '$location',
                 NavController
             ]
         );
 
     // Constructor
-    function NavController($rootScope)
+    function NavController($rootScope,$location)
     {
         var instance = this;
         instance.isSelected = isSelected;
@@ -26,6 +27,7 @@
         // Select a page
         function selectPage(setPage) {
             $rootScope.nav.page = setPage;
+            $location.path(setPage);
         }
 
         // Check selected page
