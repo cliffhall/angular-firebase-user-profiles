@@ -22,10 +22,10 @@
         })
         .constant('AUTH_PROVIDERS',{
             PASSWORD: 'password',
-            GOOGLE: 'google',
-            GITHUB: 'github',
-            FACEBOOK: 'facebook',
-            TWITTER: 'twitter'
+            GOOGLE: 'google.com',
+            GITHUB: 'github.com',
+            FACEBOOK: 'facebook.com',
+            TWITTER: 'twitter.com'
         })
         .constant('USER_FORMS', {
             SIGN_IN: 'sign-in',
@@ -37,11 +37,18 @@
             PROFILE: 'profile'
         })
         .constant('DB_NODES', {
-            BASE: 'https://ng-user-profiles.firebaseio.com/',
             USERS: 'users'
         })
         .constant('ACHIEVEMENTS', {
             PROFILE_COMPLETED: 'Profile Completed'
+        })
+        .constant('FIREBASE_CONFIG', {
+                apiKey: "AIzaSyAYfP7q0CSlu3swEMGDmueGDmS17jinSMQ",
+                authDomain: "ng-user-profiles.firebaseapp.com",
+                databaseURL: "https://ng-user-profiles.firebaseio.com",
+                projectId: "ng-user-profiles",
+                storageBucket: "ng-user-profiles.appspot.com",
+                messagingSenderId: "635929619423"
         })
         .run([
             '$rootScope',
@@ -49,6 +56,7 @@
             'PAGES',
             'USER_FORMS',
             'AUTH_PROVIDERS',
+            'FIREBASE_CONFIG',
             'DB_NODES',
             initialize
         ]);
@@ -59,26 +67,29 @@
                         PAGES,
                         USER_FORMS,
                         AUTH_PROVIDERS,
+                        FIREBASE_CONFIG,
                         DB_NODES) {
 
+        // Initialize app
+        firebase.initializeApp(FIREBASE_CONFIG);
+
         // Database-related scope initialization
-        var db = {};
-        db.base = new Firebase( DB_NODES.BASE );
-        db.users = db.base.child( DB_NODES.USERS );
+        let db = {};
+        db.users = firebase.database().ref( DB_NODES.USERS );
         $rootScope.db = db;
 
         // Nav-related scope initialization
-        var nav = {};
+        let nav = {};
         nav.PAGES = PAGES;
         nav.page = $location.$$path || PAGES.HOME;
         $rootScope.nav = nav;
 
         // Account-related scope initialization
-        var account = {};
+        let account = {};
         account.profile = null;
         account.editing = false;
         account.confirmDelete = false;
-        account.authData = db.base.getAuth();
+        account.authData = null;
         account.USER_FORMS = USER_FORMS;
         account.AUTH_PROVIDERS = AUTH_PROVIDERS;
         account.emailInput = null;
