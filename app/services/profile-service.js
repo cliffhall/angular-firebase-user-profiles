@@ -27,28 +27,23 @@
                                    AUTH_PROVIDERS,
                                    ACHIEVEMENTS)
     {
-        var instance = {};
+        let instance = {};
         instance.retrieve = retrieve;
         instance.create = create;
         instance.extract = extract;
         instance.update = update;
         instance.remove = remove;
-        instance.fromPassword = fromPassword;
-        instance.fromFacebook = fromFacebook;
-        instance.fromGoogle = fromGoogle;
-        instance.fromTwitter = fromTwitter;
-        instance.fromGithub = fromGithub;
         instance.addAchievement = addAchievement;
         return instance;
 
         // Retrieve the user's profile
         function retrieve() {
             // Get the user's uid
-            var uid = $rootScope.account.authData.uid;
+            let uid = $rootScope.account.authData.uid;
 
             // Get the profile
             $rootScope.db.users.child(uid).once('value', function (snapshot) {
-                var profile = snapshot.val();
+                let profile = snapshot.val();
                 BroadcastService.send(EVENTS.PROFILE_LOADED, profile);
             });
         }
@@ -56,8 +51,8 @@
         // Initialize a new user in the database
         function create(){
             // PREPARE
-            var uid = $rootScope.account.authData.uid;
-            var profile = instance.extract($rootScope.account.authData);
+            let uid = $rootScope.account.authData.uid;
+            let profile = instance.extract($rootScope.account.authData);
 
             // INITIALIZE
             $rootScope.db.users.child(uid).set(profile);
@@ -67,8 +62,8 @@
         // Update the user profile in the database
         function update() {
             // PREPARE
-            var uid = $rootScope.account.authData.uid;
-            var profile = $rootScope.account.profile;
+            let uid = $rootScope.account.authData.uid;
+            let profile = $rootScope.account.profile;
 
             // NEW USER ACTION
             if (profile.newUser) {
@@ -86,20 +81,20 @@
         // Remove the user profile in the database
         function remove() {
             // REMOVE FROM DB
-            var uid = $rootScope.account.authData.uid;
+            let uid = $rootScope.account.authData.uid;
             $rootScope.db.users.child(uid).remove();
         }
 
         // Extract the initial user profile from the provider authData
-        function extract(authData){
+        function extract(authData) {
 
-            var name = {first:"", last:"", display:""};
-            var profile = {
+            let name = {first: "", last: "", display: ""};
+            let profile = {
                 // The private bits
                 uid: authData.uid,
-                provider: authData.provider,
+                provider: authData.providerData[0].providerId,
                 newUser: true,
-                email: "",
+                email: authData.email,
                 // Publicly readable info
                 expose: {
                     name: name,
@@ -109,71 +104,13 @@
                 }
             };
 
-            switch (authData.provider) {
-                case AUTH_PROVIDERS.PASSWORD:
-                    return instance.fromPassword(authData, profile);
-                    break;
-
-                case AUTH_PROVIDERS.FACEBOOK:
-                    return instance.fromFacebook(authData, profile);
-                    break;
-
-                case AUTH_PROVIDERS.GOOGLE:
-                    return instance.fromGoogle(authData, profile);
-                    break;
-
-                case AUTH_PROVIDERS.TWITTER:
-                    return instance.fromTwitter(authData, profile);
-                    break;
-
-                case AUTH_PROVIDERS.GITHUB:
-                    return instance.fromGithub(authData, profile);
-                    break;
-            }
-        }
-
-        // Extract from Password provider
-        function fromPassword(authData, profile){
-            profile.email = authData.password.email;
-            profile.expose.image = authData.password.profileImageURL || null;
-            return profile;
-        }
-
-        // Extract from Facebook provider
-        function fromFacebook(authData, profile){
-            profile.expose.name.first = authData.facebook.cachedUserProfile.first_name || "";
-            profile.expose.name.last = authData.facebook.cachedUserProfile.last_name || "";
-            profile.expose.name.display = authData.facebook.displayName || "";
-            profile.expose.image = authData.facebook.profileImageURL || null;
-            return profile;
-        }
-
-        // Extract from Google provider
-        function fromGoogle(authData, profile){
-            profile.expose.name.first = authData.google.cachedUserProfile.given_name || "";
-            profile.expose.name.last = authData.google.cachedUserProfile.family_name || "";
-            profile.expose.name.display = authData.google.displayName || "";
-            profile.expose.image = authData.google.profileImageURL || null;
-            return profile;
-        }
-
-        // Extract from Twitter provider
-        function fromTwitter(authData, profile){
-            var fullName = authData.twitter.displayName;
+            let provider = authData.providerData[0];
+            let fullName = provider.displayName;
             profile.expose.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
             profile.expose.name.last = fullName.split(' ').slice(-1).join(' ') || "";
-            profile.expose.name.display = authData.twitter.displayName || "";
-            profile.expose.image = authData.twitter.profileImageURL || null;
-            return profile;
-        }
+            profile.expose.name.display = provider.displayName || "";
+            profile.expose.image = provider.photoURL || null;
 
-        // Extract from Github provider
-        function fromGithub(authData, profile){
-            var fullName = authData.github.displayName;
-            profile.expose.name.first = fullName.split(' ').slice(0, -1).join(' ') || "";
-            profile.expose.name.last = fullName.split(' ').slice(-1).join(' ') || "";
-            profile.expose.name.display = authData.github.displayName || "";
-            profile.expose.image = authData.github.profileImageURL || null;
             return profile;
         }
 

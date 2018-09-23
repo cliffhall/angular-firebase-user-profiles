@@ -49,7 +49,7 @@
         instance.cancelDelete = cancelDelete;
         instance.deleteUser = deleteUser;
         instance.finishDeleteUser = finishDeleteUser;
-        instance.authStateChanged = authStateChanged;
+        instance.onAuthStateChanged = onAuthStateChanged;
         instance.setMessage = setMessage;
         instance.clearMessage = clearMessage;
         instance.showForm = showForm;
@@ -65,7 +65,7 @@
         function initialize(){
 
             // Register the callback to be fired every time auth state changes
-            $rootScope.db.base.onAuth(instance.authStateChanged);
+            firebase.auth().onAuthStateChanged(instance.onAuthStateChanged);
 
             // Listen for PROFILE_LOADED event
             $rootScope.$on(EVENTS.PROFILE_LOADED, instance.onProfileLoaded);
@@ -79,44 +79,58 @@
 
         // Create a user
         function createUser() {
-            $rootScope.db.base.createUser({
-                    email    : $rootScope.account.emailInput,
-                    password : $rootScope.account.passwordInput
-                },
-                function(error, userData) {
-                    if (error) {
-                        instance.setMessage(error.message, true);
-                    } else {
-                        instance.signUserIn();
-                    }
-                    $rootScope.$digest();
+
+            let email = $rootScope.account.emailInput;
+            let password = $rootScope.account.passwordInput;
+
+            firebase.auth()
+                .createUserWithEmailAndPassword(email, password)
+                .catch(function(error) {
+                    instance.delaySetMessage(error.message, true);
+
                 });
         }
 
         // Sign the user in with email and password
         function signUserIn(){
-            $rootScope.db.base.authWithPassword({
-                email    : $rootScope.account.emailInput,
-                password : $rootScope.account.passwordInput
-            }, function(error, authData) {
-                if (error) {
+            let email    = $rootScope.account.emailInput;
+            let password = $rootScope.account.passwordInput;
+
+            firebase.auth()
+                .signInWithEmailAndPassword(email, password)
+                .catch(function(error) {
                     instance.setMessage(error.message, true);
                     instance.selectForm(USER_FORMS.SIGN_IN);
-                } else {
-                    instance.resetPasswordInputs();
-                    instance.selectForm(USER_FORMS.PROFILE);
-                }
-                $rootScope.$digest();
-            });
+                });
         }
 
         // Sign the user out
         function signUserOut(){
-            $rootScope.db.base.unauth();
+            firebase.auth()
+                .signOut()
+                .catch(function(error){
+                    console.log(error.message);
+                });
         }
 
         // Sign the user in with an OAuth provider
-        function signInWithOAuth(provider) {
+        function signInWithOAuth(provider_const) {
+            let provider;
+            switch (provider_const){
+                case AUTH_PROVIDERS.FACEBOOK:
+                    provider = new firebase.auth.FacebookAuthProvider();
+                    break;
+                case AUTH_PROVIDERS.TWITTER:
+                    provider = new firebase.auth.TwitterAuthProvider();
+                    break;
+                case AUTH_PROVIDERS.GOOGLE:
+                    provider = new firebase.auth.GoogleAuthProvider();
+                    break;
+                case AUTH_PROVIDERS.GITHUB:
+                    provider = new firebase.auth.GithubAuthProvider();
+                    break;
+            }
+
             $rootScope.account.emailInput = "";
             instance.resetPasswordInputs();
             instance.useOAuthPopup(provider);
@@ -124,31 +138,30 @@
 
         // Use popup for OAuth sign-in
         function useOAuthPopup(provider) {
-            $rootScope.db.base.authWithOAuthPopup(provider, function(error, authData) {
-                if (error) {
-                    if (error.code === "TRANSPORT_UNAVAILABLE") {
-                        instance.useOAuthRedirect(provider);
-                    } else {
-                        instance.setMessage(error.message, true);
-                    }
-                } else {
-                    $rootScope.account.authData = authData;
+            firebase.auth()
+                .signInWithPopup(provider)
+                .then(function(result) {
+                    $rootScope.account.authData = result.user;
                     instance.selectForm(USER_FORMS.PROFILE);
-                }
-                $rootScope.$digest();
-            });
+                })
+                .catch(function(error) {
+                    if (error) {
+                        instance.useOAuthRedirect(provider);
+                    }
+                });
         }
+
 
         // Use redirect for OAuth sign-in
         function useOAuthRedirect(provider) {
-            $rootScope.db.base.authWithOAuthRedirect(provider, function(error) {
-                if (error) {
-                    instance.setMessage(error.message, true);
-                } else {
-                    // We'll never get here, as the page will redirect on success.
-                }
-                $rootScope.$digest();
-            });
+            firebase.auth()
+                .signInWithRedirect(provider)
+                .then(function(result) {
+                    $rootScope.account.authData = result.user;
+                })
+                .catch(function(error){
+                    instance.delaySetMessage(error.message, true);
+                });
         }
 
         // Retrieve the signed-in user's profile
@@ -196,34 +209,33 @@
 
         // Change the user's password
         function changePassword() {
-            $rootScope.db.base.changePassword({
-                email    : $rootScope.account.authData.password.email,
-                oldPassword : $rootScope.account.passwordInput,
-                newPassword : $rootScope.account.newPasswordInput
-            }, function(error) {
-                if (error) {
-                    instance.setMessage(error.message, true);
-                } else {
+            let newPassword = $rootScope.account.newPasswordInput;
+            firebase.auth()
+                .currentUser
+                .updatePassword(newPassword)
+                .then(function() {
                     instance.setMessage("Password changed successfully.", false);
                     instance.resetPasswordInputs();
-                }
-                $rootScope.$digest();
-            });
+                    $timeout(instance.showAccountScreen,350,true);
+                })
+                .catch(function(error){
+                    instance.delaySetMessage(error.message, true);
+                });
         }
 
         // Send the user a password reset email
         function sendResetEmail() {
-            $rootScope.db.base.resetPassword({
-                email : $rootScope.account.emailInput
-            }, function(error) {
-                if (error) {
-                    instance.setMessage(error.message, true);
-                } else {
+            let email = $rootScope.account.emailInput;
+
+            // Get the user and set the password
+            firebase.auth()
+                .sendPasswordResetEmail(email)
+                .then(function(){
                     instance.setMessage("Password reset email sent successfully.", false);
-                    instance.resetPasswordInputs();
-                }
-                $rootScope.$digest();
-            });
+                })
+                .catch(function(error){
+                    instance.delaySetMessage(error.message, true);
+                });
         }
 
         // Confirm that the user wishes to remove the account
@@ -242,22 +254,16 @@
         // Delete the user's account
         function deleteUser(email, password) {
             ProfileService.remove();
-            var provider = $rootScope.account.authData.provider;
-            if (provider === AUTH_PROVIDERS.PASSWORD) {
-                $rootScope.db.base.removeUser({
-                    email    : email,
-                    password : password
-                }, function(error) {
-                    if (error) {
-                        instance.setMessage(error.message, true);
-                        $timeout($rootScope.digest,1000,true);
-                    } else {
-                        instance.finishDeleteUser();
-                    }
+
+            firebase.auth().currentUser
+                .delete()
+                .then( function(){
+                    instance.finishDeleteUser();
+                })
+                .catch(function(error) {
+                    instance.setMessage(error.message, true);
+                    $timeout($rootScope.digest,1000,true);
                 });
-            } else {
-                instance.finishDeleteUser();
-            }
         }
 
         // Complete the account removal
@@ -274,9 +280,8 @@
         }
 
         // Callback invoked when the authentication state changes
-        function authStateChanged(authData) {
+        function onAuthStateChanged(authData) {
             $rootScope.account.authData = authData;
-            instance.clearMessage();
             if (authData) {
                 instance.retrieveProfile();
             } else {
